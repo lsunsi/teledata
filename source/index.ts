@@ -14,3 +14,19 @@ export const failure = <Error, Data>(error: Error): Teledata<Error, Data> => [
     "failure",
     error
 ];
+
+export const isUnasked = <Error, Data>(
+    teledata: Teledata<Error, Data>
+): boolean => teledata === "unasked";
+
+export const isLoading = <Error, Data>(
+    teledata: Teledata<Error, Data>
+): boolean => teledata === "loading";
+
+export const isFailure = <Error, Data>(
+    teledata: Teledata<Error, Data>
+): boolean => teledata[0] === "failure";
+
+export const isSuccess = <Error, Data>(
+    teledata: Teledata<Error, Data>
+): boolean => teledata[0] === "success";
