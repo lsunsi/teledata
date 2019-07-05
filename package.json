@@ -24,12 +24,17 @@
   "homepage": "https://github.com/lsunsi/teledata#readme",
   "devDependencies": {
     "ava": "^2.1.0",
+    "prettier": "^1.18.2",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.2"
   },
   "ava": {
     "compileEnhancements": false,
-    "extensions": ["ts"],
-    "require": ["ts-node/register"]
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }
