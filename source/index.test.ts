@@ -57,3 +57,21 @@ test(".case_", t => {
     t.is(c(td.failure(1)), 57);
     t.is(c(td.success(1)), 79);
 });
+
+test(".map", t => {
+    const inc = (n: number): number => n + 1;
+
+    t.is(td.map(inc)(td.unasked()), td.unasked());
+    t.is(td.map(inc)(td.loading()), td.loading());
+    t.deepEqual(td.map(inc)(td.failure(":(")), td.failure(":("));
+    t.deepEqual(td.map(inc)(td.success(41)), td.success(42));
+});
+
+test(".mapError", t => {
+    const exclaim = (s: string): string => s + "!";
+
+    t.is(td.mapError(exclaim)(td.unasked()), td.unasked());
+    t.is(td.mapError(exclaim)(td.loading()), td.loading());
+    t.deepEqual(td.mapError(exclaim)(td.failure(":(")), td.failure(":(!"));
+    t.deepEqual(td.mapError(exclaim)(td.success(41)), td.success(41));
+});

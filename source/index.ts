@@ -57,3 +57,13 @@ export const case_ = <Error, Data, Result>(branches: {
         throw ":(";
     }
 };
+
+export const map = <Error, Data1, Data2>(mapper: (d: Data1) => Data2) => (
+    teledata: Teledata<Error, Data1>
+): Teledata<Error, Data2> =>
+    isSuccess(teledata) ? success(mapper(teledata[1])) : teledata;
+
+export const mapError = <Error1, Error2, Data>(
+    mapper: (e: Error1) => Error2
+) => (teledata: Teledata<Error1, Data>): Teledata<Error2, Data> =>
+    isFailure(teledata) ? failure(mapper(teledata[1])) : teledata;
