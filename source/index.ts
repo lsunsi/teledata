@@ -1,32 +1,38 @@
-export type Teledata<Error, Data> =
-    | "unasked"
-    | "loading"
-    | ["failure", Error]
-    | ["success", Data];
+type Unasked = "unasked";
+type Loading = "loading";
+type Failure<Error> = ["failure", Error];
+type Success<Data> = ["success", Data];
 
-export const unasked = <Error, Data>(): Teledata<Error, Data> => "unasked";
-export const loading = <Error, Data>(): Teledata<Error, Data> => "loading";
-export const success = <Error, Data>(data: Data): Teledata<Error, Data> => [
-    "success",
-    data
-];
-export const failure = <Error, Data>(error: Error): Teledata<Error, Data> => [
+export type Teledata<Error, Data> =
+    | Unasked
+    | Loading
+    | Failure<Error>
+    | Success<Data>;
+
+/* Constructors */
+
+export const unasked = (): Unasked => "unasked";
+export const loading = (): Loading => "loading";
+export const success = <Data>(data: Data): Success<Data> => ["success", data];
+export const failure = <Error>(error: Error): Failure<Error> => [
     "failure",
     error
 ];
 
+/* Predicates */
+
 export const isUnasked = <Error, Data>(
     teledata: Teledata<Error, Data>
-): boolean => teledata === "unasked";
+): teledata is Unasked => teledata === "unasked";
 
 export const isLoading = <Error, Data>(
     teledata: Teledata<Error, Data>
-): boolean => teledata === "loading";
+): teledata is Loading => teledata === "loading";
 
 export const isFailure = <Error, Data>(
     teledata: Teledata<Error, Data>
-): boolean => teledata[0] === "failure";
+): teledata is Failure<Error> => teledata[0] === "failure";
 
 export const isSuccess = <Error, Data>(
     teledata: Teledata<Error, Data>
-): boolean => teledata[0] === "success";
+): teledata is Success<Data> => teledata[0] === "success";
