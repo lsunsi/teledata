@@ -44,3 +44,16 @@ test(".isSuccess", t => {
     t.is(td.isSuccess(td.failure(":(")), false);
     t.is(td.isSuccess(td.success(41)), true);
 });
+
+test(".case_", t => {
+    const c = td.case_<number, number, number>({
+        unasked: (): number => 12,
+        loading: (): number => 34,
+        failure: (e: number): number => 56 + e,
+        success: (d: number): number => 78 + d
+    });
+    t.is(c(td.unasked()), 12);
+    t.is(c(td.loading()), 34);
+    t.is(c(td.failure(1)), 57);
+    t.is(c(td.success(1)), 79);
+});
